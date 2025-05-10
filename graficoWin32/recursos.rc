@@ -1,0 +1,8 @@
+#include "funcoes.hpp"
+#include <Windows.h>
+
+//-PADRAO-//
+DBOX_MAIN_BLANK DIALOG 0, 0, 0, 0
+STYLE WS_POPUP | WS_BORDER
+BEGIN
+END

@@ -1,0 +1,133 @@
+//-CASO DER ERRO NOS INSERT, APAGUE OS QUE JA FORAM INSERIDOS-//
+void deleteSeInserido() {
+	indexUltimoCorte = -1;
+	std::vector<corteInfo> tmp;
+	std::vector<int> pos;
+
+	size_t tam = cInfo.size();
+
+	for (int i = 0; i < tam; i++) {
+		if (cInfo[i].added) {
+			pos.push_back(i); //Se ja foi adicionado, remover da tela.
+		}		
+		else {
+			tmp.push_back(cInfo[i]);	//Senao, guarde.
+			indexUltimoCorte++;
+		}
+	}
+
+	for (int i = pos.size() - 1; i >= 0; i--) {
+		ListView_DeleteItem(lvInfoCorte_hwnd, pos[i]);	//Apagando inversamente, pra nao dar erro.
+	}
+
+	cInfo.clear();
+	cInfo = tmp;
+	recalcTotal = true;
+}
+
+
+
+
+
+
+
+
+
+//-PEGAR NOME DA PESSOA PELO CODIGO-//
+//std::vector<std::wstring> *getPessoaFromDB(int personID) {
+//
+//	std::vector<std::wstring> *infoPersons = nullptr;
+//
+//	std::string command = "select id, UPPER(nome), id*2 from pessoa where id = " + std::to_string(personID) + ";";
+//	sqlite3_stmt* stmt = nullptr;
+//
+//	//if (infoPersons != nullptr) {	//Fazendo isso ele retorna um valor padrao.
+//	//	infoPersons.clear();
+//	//	infoPersons.push_back(L"erro!");
+//	//	infoPersons.push_back(L"-1");
+//	//}
+//
+//	if (sqlite3_prepare_v2(db, command.c_str(), -1, &stmt, 0) != SQLITE_OK) {
+//		erroBancoDados(L"getPessoaFromDB()");
+//		//codigo = 2;
+//	}
+//	else {
+//		int res;
+//		if (res = sqlite3_step(stmt) == SQLITE_ROW) {
+//			static std::vector<std::wstring> tmp;
+//			tmp.clear();
+//			tmp.push_back(std::to_wstring(sqlite3_column_int(stmt, 0)));
+//			tmp.push_back(charToWstring((const char*)sqlite3_column_text(stmt, 1)));
+//			tmp.push_back(std::to_wstring(sqlite3_column_double(stmt, 2)));
+//			for (std::wstring& w : tmp) MessageBox(0, w.c_str(), L"err", MB_OK);
+//			infoPersons = &tmp;
+//			//codigo = 0;
+//		}
+//		//else if (res == SQLITE_ERROR) codigo = 3;
+//	}
+//
+//	sqlite3_finalize(stmt);
+//
+//	return infoPersons;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-RECUPERA DO BANCO O CORTE COM O CODIGO FORNECIDO-//
+//int getCorte(int idd_corte, std::vector<std::wstring>* vecCorte) {
+//	int retorno = 1;
+//
+//	std::string pesq = "select id, UPPER(nome), valor from corte where id = " + std::to_string(idd_corte) + std::string(";");
+//	sqlite3_stmt* stmt = nullptr;
+//
+//	if (vecCorte != nullptr) {	//Fazendo isso ele retorna um valor padrao.
+//		vecCorte->clear();
+//		vecCorte->push_back(L"-1");
+//		vecCorte->push_back(L"erro!");
+//		vecCorte->push_back(L"0");
+//	}
+//
+//	int sqlRes = SQLITE_ERROR;
+//	if (sqlRes = sqlite3_prepare_v2(db, pesq.c_str(), -1, &stmt, 0) == SQLITE_ERROR) {
+//		erroBancoDados(L"getCorte()");
+//		retorno = 2;
+//	}
+//	else {
+//		if (sqlRes = sqlite3_step(stmt) == SQLITE_ROW) {
+//			if (vecCorte != nullptr) {
+//				vecCorte->clear();
+//				vecCorte->push_back(std::to_wstring(sqlite3_column_int(stmt, 0)));
+//				vecCorte->push_back(charToWstring((const char*)sqlite3_column_text(stmt, 1)));
+//				vecCorte->push_back(std::to_wstring(sqlite3_column_double(stmt, 2)));
+//			}
+//			retorno = 0;
+//		}
+//		else if (sqlRes == SQLITE_ERROR) retorno = 3;
+//	}
+//
+//	sqlite3_finalize(stmt);
+//
+//
+//	//Se nao encontrar, ou der erro, retorne erro.
+//	return retorno;
+//}
+
+
+

@@ -1,0 +1,28 @@
+Algoritmo torreHanoi
+DECLARE
+
+funcao recursivo(num: inteiro): inteiro
+INICIO
+	se (n <=1 ) entao
+		retorne 1;
+	senao
+		retorne recursivo(num - 1) * 2 + 1;
+	fimse;
+fimfuncao;
+
+funcao direta(num: inteiro): inteiro
+INICIO
+	se (n < 1) entao
+		retorne 1;
+	senao
+		retorne direta(num - 1) * 2;
+	fimse;
+fimfuncao;
+
+	numero: inteiro;
+INICIO
+	escreva("Numero de discos: ");
+	leia(numero);
+	escreva("Resultado usando a funcao recursiva: ", recursiva(numero));
+	escreva("Resultado usando a funcao direta: ", direta(numero));
+fimalgoritmo;	

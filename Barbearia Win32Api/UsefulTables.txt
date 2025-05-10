@@ -1,0 +1,106 @@
+PRAGMA foreign_keys = ON;
+.headers on	
+
+
+CREATE TABLE pessoa (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT NOT NULL);
+
+CREATE TABLE corte (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT NOT NULL, valorpadrao REAL NOT NULL);
+
+CREATE TABLE produto (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT NOT NULL, valorpadrao REAL NOT NULL);
+
+CREATE TABLE executorcorte (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+data DATETIME NOT NULL,
+pagtocliente REAL,
+desconto REAL,
+id_barbeiro INTEGER NOT NULL,
+FOREIGN KEY (id_barbeiro) REFERENCES pessoa(id)
+);
+
+
+CREATE TABLE corteexec (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+qnt INTEGER NOT NULL,
+valor REAL NOT NULL,
+id_executor INTEGER NOT NULL,
+id_corte INTEGER NOT NULL,
+FOREIGN KEY (id_executor) REFERENCES executorcorte(id),
+FOREIGN KEY (id_corte) REFERENCES corte(id)
+);
+
+
+
+CREATE TABLE tempoInsert (qnt INTEGER, dur INTEGER);
+
+
+
+
+insert into pessoa (nome) values ('Ivan');
+insert into corte (nome, valor) values ('Combo', 50.2345);
+insert into cortesexec (transit, idBarbeiro, idCorte, valor, desconto, total, data) values (102030, 1,1, 20.25, 0.25, 20.00, '2024-01-01 16:30:25.882');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+select p.nome, c.nome, ce.transit, ce.valor, ce.desconto, ce.total, TIME(ce.data) from cortesexec as ce left join pessoa as p on p.id = ce.idBarbeiro left join corte as c on c.id = ce.idCorte; --ver todos os cortes
+select p.nome, ce.transit, sum(ce.valor), sum(ce.desconto), sum(ce.total) from cortesexec as ce left join pessoa as p on p.id = ce.idBarbeiro group by p.id, ce.transit order by ce.transit; --ver o total das transit
+select p.nome, sum(ce.valor), sum(ce.desconto), sum(ce.total) from cortesexec as ce left join pessoa as p on p.id = ce.idBarbeiro where DATE(ce.data) between '2024-03-17' and '2024-03-17' group by p.id order by sum(ce.total); --ver o total dos barbeiros
+
+select p.id, p.nome, sum(ce.valor), sum(ce.desconto), sum(ce.total), sum(ce.total)/2 as salario
+	from cortesexec as ce left join pessoa as p on p.id = ce.idBarbeiro
+	where DATE(ce.data) between '2024-01-01' and '2024-03-17'
+	group by p.id
+	order by sum(ce.total)
+; --calculando o salario
+
+
+
+
+
+
+
+////teste////
+
+PRAGMA foreign_keys = ON;
+.headers on
+.mode box
+
+CREATE TABLE CLIENTE (idClient INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT);
+CREATE TABLE PRODUTO (idProdu INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, preco REAL);
+CREATE TABLE COMPRA (idCompr INTEGER PRIMARY KEY AUTOINCREMENT, id_clien INTEGER NOT NULL, data DATE, FOREIGN KEY (id_clien) REFERENCES CLIENTE(idClient));
+CREATE TABLE COMPRA_PRODUTO (id_compr INTEGER NOT NULL, id_prod INTEGER NOT NULL, quantidade INTEGER, PRIMARY KEY (id_compr, id_prod));
+
+INSERT INTO CLIENTE (nome) VALUES ('Ivan');
+INSERT INTO COMPRA (id_clien, data) VALUES ((SELECT idClient FROM CLIENTE WHERE nome = 'Ivan'), '0000-00-00');
+INSERT INTO PRODUTO (nome, preco) VALUES ('banana', 10);
+
+
+
+INSERT INTO COMPRA_PRODUTO (id_compr, id_prod, quantidade) VALUES (
+	(SELECT idCompr FROM COMPRA WHERE id_clien = (SELECT idClient FROM CLIENTE WHERE nome = 'Ivan')),
+    (SELECT idProdu FROM PRODUTO WHERE nome = 'limao'),
+66548
+);
+
+
+select * from compra_produto where id_compr = (select idCompr from COMPRA where id_clien = (select idClient from CLIENTE where nome = 'Joao'));
+SELECT MULT((SELECT preco FROM PRODUTO WHERE idProdu = (SELECT id ) )
+
+SELECT copr.id_prod, pr.preco FROM COMPRA_PRODUTO copr, PRODUTO pr WHERE copr.id_compr = (SELECT idCompr FROM COMPRA WHERE id_clien = (SELECT idClient FROM CLIENTE WHERE nome = 'Joao' ) ) AND copr.id_prod = pr.idProdu;
+SELECT SUM(pr.preco * copr.quantidade) FROM COMPRA_PRODUTO copr, PRODUTO pr WHERE copr.id_compr = (SELECT idCompr FROM COMPRA WHERE id_clien = (SELECT idClient FROM CLIENTE WHERE nome = 'Joao' ) ) AND copr.id_prod = pr.idProdu;

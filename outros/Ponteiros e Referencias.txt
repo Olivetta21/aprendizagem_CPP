@@ -1,0 +1,21 @@
+#include <iostream.h>
+
+void main(void)
+{
+	int n=5;
+	int &nr = n; // nr é uma referência a n
+	int *ptr = &nr; // ptr aponta nr (e n também!)
+	cout << “n = “ << n << “ nr = “ << nr << endl;
+	n += 2;
+	cout << “n = “ << n << “ nr = “ << nr << endl;
+	*ptr = 3;
+	cout << “n = “ << n << “ nr = “ << nr << endl;
+}
+
+A saída produzida por esse programa é a seguinte:
+n = 5 nr = 5
+n = 7 nr = 7
+n = 3 nr = 3
+
+Uma variável de referência deve ser obrigatoriamente inicializada e o tipo do objeto
+referenciado deve ser o mesmo do objeto que referencia. 

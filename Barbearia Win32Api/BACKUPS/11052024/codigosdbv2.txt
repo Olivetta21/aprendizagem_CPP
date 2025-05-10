@@ -1,0 +1,8 @@
+select b.nome, ec.data, ec.pagtocliente - sum(ce.valor * ce.qnt) as troco, sum(ce.valor * ce.qnt) as total from executorcorte ec join barbeiro b on b.id = ec.id_barbeiro join cortesexec ce on ce.id_executor = ec.id group by b.id;
+
+select b.nome, c.nome, ce.valor, ce.qnt, ce.valor * ce.qnt as total from executorcorte ec join barbeiro b on b.id = ec.id_barbeiro join cortesexec ce on ce.id_executor = ec.id join corte c on c.id = ce.id_corte
+where ec.data between '2024-01-01' and '2024-02-20';
+
+
+
+insert into cortesexec (id_executor, id_corte, valor, qnt) values (1, 4, 25, 4), (2, 2, 10, 6);

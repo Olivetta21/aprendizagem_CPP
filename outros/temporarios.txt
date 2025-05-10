@@ -1,0 +1,78 @@
+#include <iostream>
+using namespace std;
+
+class Cubo {
+private:
+    int lado1 = 0;
+    int lado2 = 0;
+
+public:
+    Cubo(void) {}
+    Cubo(int a, int b) {
+        this->lado1 = a;
+        this->lado2 = b;
+    }
+
+    int* _lado1 = nullptr;
+    int* _lado2 = nullptr;
+
+    int calcularResposta(int a, int b) {
+        return ((a * b) + 100) / 2;
+    }
+
+    int calculoMatheus(bool a) {
+        _lado1 = new int(lado1 * 10);
+        _lado2 = new int(lado2 * 20);
+
+        if (a) cout << "Lado1: " << *_lado1 << "\tLado2: " << *_lado2 << "\n";
+
+        int resp = calcularResposta(*_lado1, *_lado2);
+        delete _lado1, _lado2;
+        _lado1, _lado2 = nullptr;
+        return resp;
+    }
+
+    int calculoLucas(bool a) {
+        _lado1 = new int(lado1 * 5);
+        _lado2 = new int(lado2 * 10);
+
+        if (a) cout << "Lado1: " << *_lado1 << "\tLado2: " << *_lado2 << "\n";
+
+        int resp = calcularResposta(*_lado1, *_lado2);
+        delete _lado1, _lado2;
+        _lado1, _lado2 = nullptr;
+        return resp;
+    }
+
+    void mostrarLados(void) {
+
+    }
+
+};
+
+int main() {
+    Cubo objetos[10];
+
+    for (int i = 0; i < 2; i++) {
+        objetos[i] = Cubo();
+    }
+
+    for (int i = 0; i < 10; i++) {
+        objetos[i] = Cubo(i + 10, i + 10);
+        cout << "Objeto numero " << i << " usando o calculo do Matheus: " << objetos[i].calculoMatheus(1) << endl;
+        cout << "Objeto numero " << i << " usando o calculo do Lucas: " << objetos[i].calculoLucas(1) << "\n\n";
+    }
+
+    int num;
+    do {
+        cout << "\n\n\n";
+
+        cout << "Mostrar calculo de quem: ";
+        cin >> num;
+
+        cout << "Objeto numero " << num << " usando o calculo do Matheus: " << objetos[num].calculoMatheus(1) << endl;
+
+        cout << "Objeto numero " << num << " usando o calculo do Lucas: " << objetos[num].calculoLucas(1) << "\n\n";
+    } while (num > 0);
+
+}

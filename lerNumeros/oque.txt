@@ -1,0 +1,9 @@
+ler numero a numero, ex:
+
+1234 = 
+escreva 1;
+escreva 2;
+escreva 3;
+escreva 4;
+
+usando recursividade
